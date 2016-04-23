@@ -20,7 +20,7 @@ script:
   - "nosetests -s --verbosity=4 -i '\\.py$' -e p2p_bicycle . --with-xcoverage --cover-package=omgtools --cover-tests 2> >(grep -v -P 'DEBUG: (?!wantFile)')"
   - pushd export
   - make && pushd bin
-#  - valgrind ./Point2Point
+  - valgrind ./Point2Point
   - popd
   - popd
 
