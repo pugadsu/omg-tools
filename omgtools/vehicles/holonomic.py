@@ -133,3 +133,11 @@ class Holonomic(Vehicle):
 
     def ode(self, state, input):
         return input
+
+    def _overrule_state(self, state):
+        newstate = [state['x'], state['y']]
+        self.signals['state'][:, -1] = newstate
+
+    def _overrule_input(self, input):
+        newinput = [input['vx'], input['vy']]
+        self.signals['input'][:, -1] = newinput

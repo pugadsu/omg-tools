@@ -194,6 +194,14 @@ class ObstaclexD(OptiChild):
         pose[:self.n_dim] = self.signals['position'][:, t]
         return self.shape.draw(pose)
 
+    def _overrule_position(self, position):
+        self.signals['position'][:, -1] = position
+
+    def _overrule_velocity(self, velocity):
+        self.signals['velocity'][:, -1] = velocity
+
+    def _overrule_orientation(self, orientation):
+        raise NotImplementedError('Orientation is currently only supported for 2D obstacles')
 
 class Obstacle2D(ObstaclexD):
 
@@ -306,6 +314,8 @@ class Obstacle2D(ObstaclexD):
         pose[2] = self.signals['orientation'][:, t]
         return self.shape.draw(pose)
 
+    def _overrule_orientation(self, orientation):
+        self.signals['orientation'][:, -1] = orientation
 
 class Obstacle3D(ObstaclexD):
 
