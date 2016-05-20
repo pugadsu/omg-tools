@@ -23,9 +23,10 @@ from plotlayer import PlotLayer
 
 class Deployer:
 
-    def __init__(self, problem, sample_time=0.01):
+    def __init__(self, problem, update_time= 0.1, sample_time=0.01):
         self.problem = problem
         self.sample_time = sample_time
+        self.update_time = update_time
         PlotLayer.deployer = self
 
     def run(self, vehState, obsState, goalState):
@@ -34,22 +35,33 @@ class Deployer:
             vehicle._overrule_state(vehState['state'])
             vehicle._overrule_input(vehState['input'])
             vehicle.set_terminal_conditions(goalState)
-        for obstacle in self.problem.environment.obstacles:
-            obstacle._overrule_position(obsState[obstacle]['position'])
-            obstacle._overrule_orientation(obsState[obstacle]['orientation'])
-            obstacle._overrule_velocity(obsState[obstacle]['velocity'])
+
+        dummy_obstacle = {'position': [-100., -100.], 'velocity': [0., 0.], 'angle': 0.}
+        for i, obstacle in enumerate(self.problem.environment.obstacles):
+            # environment contains dummy obstacles to account for new obstacles in the environment
+            # filter these out
+            obstacle_observation = obsState[i] if obsState is not None and i < len(obsState) else dummy_obstacle
+            obstacle._overrule_position(obstacle_observation['position'])
+            obstacle._overrule_orientation(obstacle_observation['angle'])
+            obstacle._overrule_velocity(obstacle_observation['velocity'])
         # solve problem
-        self.problem.solve(0., 0.)  # current_time and update_time are 0.
+        self.problem.solve(0., self.update_time)  # current_time and update_time are 0.
+        # check if problem was feasible
+        if self.problem.problem.stats()['return_status'] != 'Solve_Succeeded':
+            feasible = False
+            return feasible, {}, {}
+        else:
+            feasible = True
         # update everything
-        self.problem.update(0., 0., self.sample_time)
+        self.problem.update(0., self.update_time, self.sample_time)        
         # check termination criteria
-        stop = self.problem.stop_criterium(0., 0.) #, self.update_time)
+        stop = self.problem.stop_criterium(0., self.update_time)
         # return trajectories
         traj_state, traj_input = {}, {}
         for vehicle in self.problem.vehicles:
             traj_state[str(vehicle)] = vehicle.trajectories['state']
             traj_input[str(vehicle)] = vehicle.trajectories['input']
-        return stop, traj_state, traj_input
+        return feasible, traj_state, traj_input
 
     def time2index(self, time):
         Ts = self.sample_time
