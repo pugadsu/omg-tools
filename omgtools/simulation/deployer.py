@@ -62,6 +62,7 @@ class Deployer:
                 return status, {}, {}, 0.
         else:
             status = 'feasible'
+
         # update everything
         self.problem.update(0., self.update_time, self.sample_time)        
         # check termination criteria
