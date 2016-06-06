@@ -23,9 +23,10 @@ from plotlayer import PlotLayer
 
 class Deployer:
 
-    def __init__(self, problem, sample_time=0.01):
+    def __init__(self, problem, update_time= 0.1, sample_time=0.01):
         self.problem = problem
         self.sample_time = sample_time
+        self.update_time = update_time
         PlotLayer.deployer = self
 
     def run(self, vehState, obsState, goalState):
@@ -34,22 +35,44 @@ class Deployer:
             vehicle._overrule_state(vehState['state'])
             vehicle._overrule_input(vehState['input'])
             vehicle.set_terminal_conditions(goalState)
-        for obstacle in self.problem.environment.obstacles:
-            obstacle._overrule_position(obsState[obstacle]['position'])
-            obstacle._overrule_orientation(obsState[obstacle]['orientation'])
-            obstacle._overrule_velocity(obsState[obstacle]['velocity'])
+
+        dummy_obstacle = {'position': [-100., -100.], 'velocity': [0., 0.], 'angle': 0.}
+        for i, obstacle in enumerate(self.problem.environment.obstacles):
+            # environment contains dummy obstacles to account for new obstacles in the environment
+            # filter these out
+            obstacle_observation = obsState[i] if obsState is not None and i < len(obsState) else dummy_obstacle
+            print 'overruling obstacle state for: ', obstacle, 'with position: ', obstacle.signals['position'][:, -1], ' with new position: ', obstacle_observation['position']
+            obstacle._overrule_position(obstacle_observation['position'])
+            obstacle._overrule_orientation(obstacle_observation['angle'])
+            obstacle._overrule_velocity(obstacle_observation['velocity'])
         # solve problem
-        self.problem.solve(0., 0.)  # current_time and update_time are 0.
+        self.problem.solve(0., self.update_time)  # current_time and update_time are 0.
+        # check if problem was feasible
+        return_status = self.problem.problem.stats()['return_status']
+        if  return_status != 'Solve_Succeeded':
+            if return_status == 'Infeasible_Problem_Detected':
+                status = 'infeasible'
+                return status, {}, {}, 0.
+            elif return_status == 'Maximum_CpuTime_Exceeded':
+                status = 'too slow'
+                return status, {}, {}, 0.
+            else: 
+                print 'Unhandled error message from solver'
+                status = 'error'
+                return status, {}, {}, 0.
+        else:
+            status = 'feasible'
         # update everything
-        self.problem.update(0., 0., self.sample_time)
+        self.problem.update(0., self.update_time, self.sample_time)        
         # check termination criteria
-        stop = self.problem.stop_criterium(0., 0.) #, self.update_time)
+        stop = self.problem.stop_criterium(0., self.update_time)
         # return trajectories
         traj_state, traj_input = {}, {}
         for vehicle in self.problem.vehicles:
             traj_state[str(vehicle)] = vehicle.trajectories['state']
             traj_input[str(vehicle)] = vehicle.trajectories['input']
-        return stop, traj_state, traj_input
+        motionTime = self.problem.get_variable('T',solution=True)[0][0]
+        return status, traj_state, traj_input, motionTime
 
     def time2index(self, time):
         Ts = self.sample_time

@@ -135,9 +135,13 @@ class Holonomic(Vehicle):
         return input
 
     def _overrule_state(self, state):
-        newstate = [state['x'], state['y']]
-        self.signals['state'][:, -1] = newstate
+        if hasattr(self, 'signals'):
+            newstate = [state['x'], state['y']]
+            # for i in range(np.shape(self.signals['state'])[1]):
+            self.signals['state'][:, -1] = newstate
 
     def _overrule_input(self, input):
-        newinput = [input['vx'], input['vy']]
-        self.signals['input'][:, -1] = newinput
+        if hasattr(self, 'signals'):
+            newinput = [input['dx'], input['dy']]
+            # for i in range(np.shape(self.signals['input'])[1]):
+            self.signals['input'][:, -1] = newinput
