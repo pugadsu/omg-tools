@@ -18,6 +18,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 #include "Vehicle.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -42,6 +43,22 @@ ideal_prediction(false), provide_prediction(false), predicted_state(n_st), predi
     this->knots = knots;
     this->derivative_T.resize(degree+1);
     createDerivativeMatrices();
+
+    cout<<"knot_intervals: "<<knot_intervals<<endl;
+    cout<<"degree: "<<degree<<endl;
+
+    cout<<"knots: "<<knots[0]<<endl;
+    cout<<"knots: "<<knots[1]<<endl;
+    cout<<"knots: "<<knots[2]<<endl;
+    cout<<"knots: "<<knots[3]<<endl;
+    cout<<"knots: "<<knots[4]<<endl;
+    cout<<"knots: "<<knots[5]<<endl;
+    cout<<"knots: "<<knots[6]<<endl;
+    cout<<"knots: "<<knots[7]<<endl;
+    cout<<"knots: "<<knots[8]<<endl;
+    cout<<"knots: "<<knots[9]<<endl;
+    cout<<"knots: "<<knots[10]<<endl;
+    cout<<"knots: "<<knots[11]<<endl;
 }
 
 Vehicle::Vehicle(int n_st, int n_in, int n_spl, int degree):Vehicle(n_st, n_in, n_spl, degree, 10){
@@ -110,6 +127,7 @@ void Vehicle::integrate(vector<double>& state0, vector<vector<double>>& input, v
 }
 
 void Vehicle::sampleSplines(vector<vector<double>>& spline_coeffs, vector<double> time, int derivative, vector<vector<double>>& spline_sampled){
+    cout<<"In sampleSplines"<<endl;
     vector<double> knots(this->knots.begin()+derivative, this->knots.end()-derivative);
     for (int k=0; k<time.size(); k++){
         for (int i=0; i<n_spl; i++){
@@ -125,6 +143,7 @@ void Vehicle::sampleSplines(vector<vector<double>>& spline_coeffs, vector<double
 }
 
 void Vehicle::sampleSplines(vector<vector<double>>& spline_coeffs, vector<double> time, vector<vector<double>>& spline_samples){
+    cout<<"In sampleSplines_0"<<endl;
     sampleSplines(spline_coeffs, time, 0, spline_samples);
 }
 
@@ -187,6 +206,25 @@ double Vehicle::evalSpline(double x, vector<double>& knots, vector<double>& coef
         y += coeffs[l]*basis[degree][l];
     }
     return y;
+}
+
+void Vehicle::diffNumerically(std::vector<double>& samples, std::vector<double>& samples_diff, double sample_time){
+    cout<<"in diffNumerically1"<<endl;
+    // second order central forward difference scheme
+    for (int i=1; i<samples.size()-1; i++){
+        samples_diff[i] = (samples[i+1]-samples[i])/sample_time-sample_time/2*(samples[i+1] -2*samples[i] + samples[i-1])/(pow(sample_time,2));
+    }
+    samples_diff[0] = samples_diff[1]; //first element
+    samples_diff[samples.size()-1] = samples_diff[samples.size()-2]; //last element
+}
+
+void Vehicle::intNumerically(vector<double>& samples, vector<double>& samples_int, double int_cte, double sample_time){
+    cout<<"in intNumerically1"<<endl;
+    //integration via Simpson's rule = RK4 for this case
+    samples_int[0] = int_cte; //first element
+    for (int i=0; i<samples.size()-1; i++){
+        samples_int[i+1] = samples_int[i] + sample_time/6*(samples[i] + 4*(samples[i]+samples[i+1])/2 + samples[i+1]);
+    }
 }
 
 void Vehicle::setKnotHorizon(double horizon_time){

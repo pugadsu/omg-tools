@@ -53,6 +53,8 @@ class Vehicle{
         void sampleSplines(std::vector<std::vector<double>>& spline_coeffs, std::vector<double> time, std::vector<std::vector<double>>& spline_sampled);
         void getPrediction(std::vector<double>& state, std::vector<double>& input);
         void setPrediction(std::vector<double>& state, std::vector<double>& input);
+        void diffNumerically(std::vector<double>& samples, std::vector<double>& samples_diff, double sample_time);
+        void intNumerically(std::vector<double>& samples, std::vector<double>& samples_int, double int_cte, double sample_time);
 
     public:
         virtual void setInitialConditions(std::vector<double>& conditions) = 0;
@@ -60,11 +62,12 @@ class Vehicle{
         virtual void getInitSplineValue(std::vector<std::vector<double>>& init_value) = 0;
         virtual void setParameters(std::map<std::string,std::vector<double>>& par_dict) = 0;
         virtual void ode(std::vector<double>& state, std::vector<double>& input, std::vector<double>& dstate) = 0;
-        virtual void splines2State(std::vector<std::vector<double>>& spline_coeffs, std::vector<double> time, std::vector<std::vector<double>>& state) = 0;
-        virtual void splines2Input(std::vector<std::vector<double>>& spline_coeffs, std::vector<double> time, std::vector<std::vector<double>>& input) = 0;
+        virtual void splines2State(std::vector<std::vector<double>>& spline_coeffs, std::vector<double> time, std::vector<std::vector<double>>& state, double sample_time) = 0;
+        virtual void splines2Input(std::vector<std::vector<double>>& spline_coeffs, std::vector<double> time, std::vector<std::vector<double>>& input, double sample_time) = 0;
 
         Vehicle(int n_st, int n_in, int n_spl, int degree, int knot_intervals);
         Vehicle(int n_st, int n_in, int n_spl, int degree);
+
 
         void predict(std::vector<double>& state0, std::vector<std::vector<double>>& state_trajectory, std::vector<std::vector<double>>& input_trajectory, double predict_time, double sample_time, int predict_shift);
         void setKnotHorizon(double horizon_time);

@@ -71,7 +71,28 @@ void Point2Point::initialize(){
     generateProblem();
     generateSubstituteFunctions();
     args["p"] = parameters;
+    cout<<"Initialize"<<endl;
+    // cout<<"parameters[0]: "<<parameters[0]<<endl;
+    // cout<<"parameters[1]: "<<parameters[1]<<endl;
+    // cout<<"parameters[2]: "<<parameters[2]<<endl;
+    // cout<<"parameters[3]: "<<parameters[3]<<endl;
+    // cout<<"parameters[4]: "<<parameters[4]<<endl;
+    // cout<<"parameters[5]: "<<parameters[5]<<endl;
+    // cout<<"parameters[6]: "<<parameters[6]<<endl;
+    // cout<<"parameters[7]: "<<parameters[7]<<endl;
+    // cout<<"parameters[8]: "<<parameters[8]<<endl;
+    // cout<<"parameters[9]: "<<parameters[9]<<endl;
     args["x0"] = variables;
+    // cout<<"variables[0]: "<<variables[0]<<endl;
+    // cout<<"variables[1]: "<<variables[1]<<endl;
+    // cout<<"variables[2]: "<<variables[2]<<endl;
+    // cout<<"variables[3]: "<<variables[3]<<endl;
+    // cout<<"variables[4]: "<<variables[4]<<endl;
+    // cout<<"variables[5]: "<<variables[5]<<endl;
+    // cout<<"variables[6]: "<<variables[6]<<endl;
+    // cout<<"variables[7]: "<<variables[7]<<endl;
+    // cout<<"variables[8]: "<<variables[8]<<endl;
+    // cout<<"variables[9]: "<<variables[9]<<endl;
     args["lbg"] = lbg;
     args["ubg"] = ubg;
     initSplines();
@@ -207,9 +228,127 @@ bool Point2Point::solve(double current_time, vector<obstacle_t>& obstacles){
     updateBounds(current_time, obstacles);
     setParameters(obstacles);
     args["p"] = parameters;
+    cout<<"solve"<<endl;
+    // cout<<"parameters[0]: "<<parameters[0]<<endl;
+    // cout<<"parameters[1]: "<<parameters[1]<<endl;
+    // cout<<"parameters[2]: "<<parameters[2]<<endl;
+    // cout<<"parameters[3]: "<<parameters[3]<<endl;
+    // cout<<"parameters[4]: "<<parameters[4]<<endl;
+    // cout<<"parameters[5]: "<<parameters[5]<<endl;
+    // cout<<"parameters[6]: "<<parameters[6]<<endl;
+    // cout<<"parameters[7]: "<<parameters[7]<<endl;
+    // cout<<"parameters[8]: "<<parameters[8]<<endl;
+    // cout<<"parameters[9]: "<<parameters[9]<<endl;
+
     args["x0"] = variables;
+    // cout<<"variables[0]: "<<variables[0]<<endl;
+    // cout<<"variables[1]: "<<variables[1]<<endl;
+    // cout<<"variables[2]: "<<variables[2]<<endl;
+    // cout<<"variables[3]: "<<variables[3]<<endl;
+    // cout<<"variables[4]: "<<variables[4]<<endl;
+    // cout<<"variables[5]: "<<variables[5]<<endl;
+    // cout<<"variables[6]: "<<variables[6]<<endl;
+    // cout<<"variables[7]: "<<variables[7]<<endl;
+    // cout<<"variables[8]: "<<variables[8]<<endl;
+    // cout<<"variables[9]: "<<variables[9]<<endl;
+    // cout<<"variables[10]: "<<variables[10]<<endl;
+    // cout<<"variables[11]: "<<variables[11]<<endl;
+    // cout<<"variables[12]: "<<variables[12]<<endl;
+    // cout<<"variables[13]: "<<variables[13]<<endl;
+    // cout<<"variables[14]: "<<variables[14]<<endl;
+    // cout<<"variables[15]: "<<variables[15]<<endl;
+    // cout<<endl;
+    // cout<<"variables[16]: "<<variables[16]<<endl;
+    // cout<<"variables[17]: "<<variables[17]<<endl;
+    // cout<<"variables[18]: "<<variables[18]<<endl;
+    // cout<<"variables[19]: "<<variables[19]<<endl;
+    // cout<<"variables[20]: "<<variables[20]<<endl;
+    // cout<<"variables[21]: "<<variables[21]<<endl;
+    // cout<<"variables[22]: "<<variables[22]<<endl;
+    // cout<<"variables[23]: "<<variables[23]<<endl;
+    // cout<<"variables[24]: "<<variables[24]<<endl;
+    // cout<<"variables[25]: "<<variables[25]<<endl;
+    // cout<<"variables[26]: "<<variables[26]<<endl;
+    // cout<<"variables[27]: "<<variables[27]<<endl;
+    // cout<<"variables[28]: "<<variables[28]<<endl;
+    // cout<<"variables[29]: "<<variables[29]<<endl;
+    // cout<<"variables[30]: "<<variables[30]<<endl;
+    // cout<<"variables[31]: "<<variables[31]<<endl;
+    // cout<<"variables[32]: "<<variables[32]<<endl;
+    // cout<<"variables[33]: "<<variables[33]<<endl;
+    // cout<<"variables[34]: "<<variables[34]<<endl;
+    // cout<<"variables[35]: "<<variables[35]<<endl;
+    // cout<<"variables[36]: "<<variables[36]<<endl;
+    // cout<<"variables[37]: "<<variables[37]<<endl;
+    // cout<<"variables[38]: "<<variables[38]<<endl;
+    // cout<<"variables[39]: "<<variables[39]<<endl;
+    // cout<<"variables[40]: "<<variables[40]<<endl;
+    // cout<<"variables[41]: "<<variables[41]<<endl;
+    // cout<<"variables[41]: "<<variables[42]<<endl;
+    // cout<<"variables[41]: "<<variables[43]<<endl;
+    // cout<<"variables[41]: "<<variables[44]<<endl;
+    // cout<<"variables[41]: "<<variables[45]<<endl;
+    // cout<<"variables[41]: "<<variables[46]<<endl;
+    // cout<<"variables[41]: "<<variables[47]<<endl;
+    // cout<<"variables[41]: "<<variables[48]<<endl;
+    // cout<<"variables[41]: "<<variables[49]<<endl;
+    // cout<<"variables[41]: "<<variables[50]<<endl;
+    // cout<<"variables[41]: "<<variables[51]<<endl;
+    // cout<<"variables[41]: "<<variables[52]<<endl;
+    // cout<<"variables[41]: "<<variables[53]<<endl;
+    // cout<<"variables[41]: "<<variables[54]<<endl;
+    // cout<<"variables[41]: "<<variables[55]<<endl;
+    // cout<<"variables[41]: "<<variables[56]<<endl;
+    // cout<<"variables[41]: "<<variables[57]<<endl;
+    // cout<<"variables[41]: "<<variables[58]<<endl;
+    // cout<<"variables[41]: "<<variables[59]<<endl;
+    // cout<<"variables[41]: "<<variables[60]<<endl;
+    // cout<<"variables[41]: "<<variables[61]<<endl;
+    // cout<<"variables[41]: "<<variables[62]<<endl;
+    // cout<<"variables[41]: "<<variables[63]<<endl;
+    // cout<<"variables[41]: "<<variables[64]<<endl;
+    // cout<<"variables[41]: "<<variables[65]<<endl;
+    // cout<<"variables[41]: "<<variables[66]<<endl;
+    // cout<<"variables[41]: "<<variables[67]<<endl;
+    // cout<<"variables[41]: "<<variables[68]<<endl;
+    // cout<<"variables[41]: "<<variables[69]<<endl;
+    // cout<<"variables[41]: "<<variables[70]<<endl;
+    // cout<<"variables[41]: "<<variables[71]<<endl;
+    // cout<<"variables[41]: "<<variables[72]<<endl;
+    // cout<<"variables[41]: "<<variables[73]<<endl;
+    // cout<<"variables[41]: "<<variables[74]<<endl;
+    // cout<<"variables[41]: "<<variables[75]<<endl;
+    // cout<<"variables[41]: "<<variables[76]<<endl;
+    // cout<<"variables[41]: "<<variables[77]<<endl;
+    // cout<<"variables[41]: "<<variables[78]<<endl;
+    // cout<<"variables[41]: "<<variables[79]<<endl;
+    // cout<<"variables[41]: "<<variables[80]<<endl;
+    // cout<<"variables[41]: "<<variables[81]<<endl;
+    // cout<<"variables[41]: "<<variables[82]<<endl;
+    // cout<<"variables[41]: "<<variables[83]<<endl;
+    // cout<<"variables[41]: "<<variables[84]<<endl;
+    // cout<<endl;
+
     args["lbg"] = lbg;
+    // cout<<"lbg[0]: "<<lbg[0]<<endl;
+    // cout<<"lbg[1]: "<<lbg[1]<<endl;
+    // cout<<"lbg[2]: "<<lbg[2]<<endl;
+    // cout<<"lbg[3]: "<<lbg[3]<<endl;
+    // cout<<"lbg[4]: "<<lbg[4]<<endl;
+    // cout<<"lbg[5]: "<<lbg[5]<<endl;
+    // cout<<"lbg[6]: "<<lbg[6]<<endl;
+    // cout<<"lbg[7]: "<<lbg[7]<<endl;
+
     args["ubg"] = ubg;
+    // cout<<"ubg[0]: "<<ubg[0]<<endl;
+    // cout<<"ubg[1]: "<<ubg[1]<<endl;
+    // cout<<"ubg[2]: "<<ubg[2]<<endl;
+    // cout<<"ubg[3]: "<<ubg[3]<<endl;
+    // cout<<"ubg[4]: "<<ubg[4]<<endl;
+    // cout<<"ubg[5]: "<<ubg[5]<<endl;
+    // cout<<"ubg[6]: "<<ubg[6]<<endl;
+    // cout<<"ubg[7]: "<<ubg[7]<<endl;
+
     sol = problem(args);
     solver_output = string(problem.stats().at("return_status"));
     if (solver_output.compare("Solve_Succeeded") != 0){
@@ -219,6 +358,7 @@ bool Point2Point::solve(double current_time, vector<obstacle_t>& obstacles){
         vector<double> var(sol.at("x"));
         for (int k=0; k<n_var; k++){
             variables[k] = var[k];
+            cout<<"solved var: "<<variables[k]<<endl;
         }
         return true;
     }
@@ -304,8 +444,9 @@ void Point2Point::retrieveTrajectories(vector<vector<double>>& spline_coeffs){
             time[k] += fmod(round(current_time*1000.)/1000., horizon_time/vehicle->getKnotIntervals());
         }
     }
-    vehicle->splines2State(spline_coeffs, time, state_trajectory);
-    vehicle->splines2Input(spline_coeffs, time, input_trajectory);
+    vehicle->splines2State(spline_coeffs, time, state_trajectory, this->sample_time);
+    vehicle->splines2Input(spline_coeffs, time, input_trajectory, this->sample_time);
+    cout<<"in retrieveTrajectories"<<endl;
 }
 
 void Point2Point::getParameterVector(vector<double>& par_vect, map<string, map<string, vector<double>>>& par_dict){
