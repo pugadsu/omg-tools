@@ -28,7 +28,7 @@ using namespace std;
 
 int main()
 {
-    int n_iter = 50;
+    int n_iter = 15;
     double horizon_time = 10;
     double sample_time = 0.01;
     double update_time = 0.1;
@@ -84,6 +84,7 @@ int main()
     obstacles[1].position[1] = 1.0;
 
     // compare with solution from Python
+    // Read state csv-file
     vector<vector<vector<double>>> data_state(n_iter, vector<vector<double>>(trajectory_length, vector<double>(3)));
     ifstream file_state;
     file_state.open("../test/data_state.csv");
@@ -104,7 +105,7 @@ int main()
         }
     }
     file_state.close();
-
+    // Read input csv-file
     vector<vector<vector<double>>> data_input(n_iter, vector<vector<double>>(trajectory_length, vector<double>(2)));
     ifstream file_input;
     file_input.open("../test/data_input.csv");
@@ -134,36 +135,14 @@ int main()
         time = double(end-begin)/CLOCKS_PER_SEC;
         cout << "it: " << i << ", " << "time: " << time << "s" << endl;
         int cnt = 0;
-
-        for (int k=0; k<state_trajectory.size(); k++){
-            cout<<state_trajectory[k]<<endl;
-        }
-        cout<<endl;
-        cout<<endl;
-        cout<<endl;
-        cout<<endl;
-        for (int k=0; k<input_trajectory.size(); k++){
-            cout<<input_trajectory[k]<<endl;
-        }
-
-        // cout<<"state traj"<<state_trajectory[0]<<endl;
-        // cout<<"state traj size"<<state_trajectory.size()<<endl;
-        // cout<<"state traj[0] size"<<state_trajectory[0].size()<<endl;
-        // cout<<"input traj"<<input_trajectory[0]<<endl;
-        // cout<<"input traj size"<<input_trajectory.size()<<endl;
-        // cout<<"input traj[0] size"<<input_trajectory[0].size()<<endl;
-
         for (int k=0; k<2; k++){
             for (int j=0; j<trajectory_length; j++){
                 if (data_state[i][j][k] < 1e-14){
                     err = (data_state[i][j][k] - state_trajectory[j][k]);
                 }
                 else {
-                    // cout<<"state data: "<<data_state[i][j][k]<<endl;
-                    // cout<<"state traj: "<<state_trajectory[j][k]<<endl;
                     err = (data_state[i][j][k] - state_trajectory[j][k])/data_state[i][j][k];
                 }
-                cout<<"error state: "<<err<<endl;
                 assert(err < 1e-2);
                 if (data_input[i][j][k] < 1e-14){
                     err = (data_input[i][j][k] - input_trajectory[j][k]);
@@ -171,7 +150,6 @@ int main()
                 else {
                     err = (data_input[i][j][k] - input_trajectory[j][k])/data_input[i][j][k];
                 }
-                cout<<"error input: "<<err<<endl;
                 assert(err < 1e-2);
             }
         }
