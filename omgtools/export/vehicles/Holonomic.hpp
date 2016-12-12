@@ -36,8 +36,8 @@ class Holonomic: public Vehicle{
         void setParameters(std::map<std::string,std::vector<double>>& par_dict);
         void ode(std::vector<double>& state, std::vector<double>& input, std::vector<double>& dstate);
         void getInitSplineValue(std::vector<std::vector<double>>& init_value);
-        void splines2State(std::vector<std::vector<double>>& spline_coeffs, std::vector<double> time, std::vector<std::vector<double>>& state);
-        void splines2Input(std::vector<std::vector<double>>& spline_coeffs, std::vector<double> time, std::vector<std::vector<double>>& input);
+        void splines2State(std::vector<std::vector<double>>& spline_coeffs, std::vector<double> time, std::vector<std::vector<double>>& state, double sample_time);
+        void splines2Input(std::vector<std::vector<double>>& spline_coeffs, std::vector<double> time, std::vector<std::vector<double>>& input, double sample_time);
     };
 }
 

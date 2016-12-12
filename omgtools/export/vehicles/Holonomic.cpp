@@ -68,11 +68,11 @@ void Holonomic::setParameters(map<string,vector<double>>& parameters){
     parameters["positionT"] = this->positionT;
 }
 
-void Holonomic::splines2State(vector<vector<double>>& spline_coeffs, vector<double> time, vector<vector<double>>& state){
+void Holonomic::splines2State(vector<vector<double>>& spline_coeffs, vector<double> time, vector<vector<double>>& state, double sample_time){
     this->sampleSplines(spline_coeffs, time, state);
 }
 
-void Holonomic::splines2Input(vector<vector<double>>& spline_coeffs, vector<double> time, vector<vector<double>>& input){
+void Holonomic::splines2Input(vector<vector<double>>& spline_coeffs, vector<double> time, vector<vector<double>>& input, double sample_time){
     this->sampleSplines(spline_coeffs, time, 1, input);
 }
 
